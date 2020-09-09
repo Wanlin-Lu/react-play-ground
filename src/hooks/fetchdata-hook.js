@@ -1,3 +1,8 @@
+/**
+ * useDataApi with origin fetch
+ * @{initialUrl, initialData}
+ * return [state, setUrl]
+ */
 import { useState, useEffect, useReducer } from 'react'
 
 const dataFetchReducer = (state, action) => {
