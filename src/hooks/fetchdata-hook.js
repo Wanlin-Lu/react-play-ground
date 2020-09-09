@@ -53,5 +53,6 @@ export const useDataApi = (initialUrl, initialData) => {
     fetchData();
   }, [url]);
 
+  // ! state as one, but in component can decontruct
   return [state, setUrl]
 }

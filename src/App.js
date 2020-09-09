@@ -7,7 +7,7 @@ import { useDataApi } from './hooks/fetchdata-hook'
 function App() {
   const [query, setQuery] = useState('redux')
   const [
-    { data, isLoading, isError },
+    { data, isLoading, isError }, //! deconstruction state
     doFetch,
   ] = useDataApi("https://hn.algolia.com/api/v1/search?query=redux", { hits: [] });
 
