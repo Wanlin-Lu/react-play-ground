@@ -1,37 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import { useHackerNewsApi } from './hooks/fetchdata-hook'
+
 function App() {
-  const [data, setData] = useState({ hits: [] })
   const [query, setQuery] = useState('redux')
-  const [url, setUrl] = useState(
-    "https://hn.algolia.com/api/v1/search?query=redux"
-  );
-  const [isLoading, setIsLoading] = useState(false)
-  const [isError, setIsError] = useState(false)
-  
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsError(false)
-      setIsLoading(true)
-
-      try {
-        const dataRaw = await fetch(url);
-
-        const result = await dataRaw.json();
-
-        setData(result);
-        console.log(result);
-      } catch (error) {
-        setIsError(true)
-      }
-
-      setIsLoading(false);
-    }
-
-    fetchData()
-  },[url])
+  const [{ data, isLoading, isError }, doFetch] = useHackerNewsApi()
 
   return (
     <div className="App">
@@ -41,7 +16,7 @@ function App() {
       {/* !form onSubmit to enable "ENTER" key. */}
       <form
         onSubmit={e => {
-          setUrl(`https://hn.algolia.com/api/v1/search?query=${query}`)
+          doFetch(`https://hn.algolia.com/api/v1/search?query=${query}`)
 
           //! stop broser reload on submit
           e.preventDefault()
