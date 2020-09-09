@@ -35,6 +35,8 @@ export const useDataApi = (initialUrl, initialData) => {
   })
 
   useEffect(() => {
+    let didCancel = false
+
     const fetchData = async () => {
       dispatch({type: 'FETCH_INIT'})
 
@@ -43,14 +45,23 @@ export const useDataApi = (initialUrl, initialData) => {
 
         const result = await dataRaw.json();
 
-        dispatch({type: 'FETCH_SUCCESS', payload: result})
+        if (!didCancel) {
+          dispatch({ type: "FETCH_SUCCESS", payload: result });
+        }
+
         console.log(result);
       } catch (error) {
-        dispatch({ type: 'FETCH_FAILURE'})
+        if (!didCancel) {
+          dispatch({ type: 'FETCH_FAILURE' })
+        }
       }
     };
 
     fetchData();
+
+    return () => {
+      didCancel = true
+    }
   }, [url]);
 
   // ! state as one, but in component can decontruct
