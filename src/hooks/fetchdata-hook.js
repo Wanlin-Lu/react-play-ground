@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react'
 
-export const useHackerNewsApi = () => {
-  const [data, setData] = useState({ hits: [] });
-  const [url, setUrl] = useState(
-    "https://hn.algolia.com/api/v1/search?query=redux"
-  );
+export const useDataApi = (initialUrl, initialData) => {
+  const [data, setData] = useState(initialData);
+  const [url, setUrl] = useState(initialUrl);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
