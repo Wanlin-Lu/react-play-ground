@@ -8,15 +8,19 @@ function App() {
   const [url, setUrl] = useState(
     "https://hn.algolia.com/api/v1/search?query=redux"
   );
+  const [isLoading, setIsLoading] = useState(false)
   
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
+      setIsLoading(true)
+
       const dataRaw = await fetch(url);
 
       const result = await dataRaw.json();
 
       setData(result);
       console.log(result);
+      setIsLoading(false)
     }
 
     fetchData()
@@ -42,13 +46,17 @@ function App() {
           Search
         </button>
       </div>
-      <ul>
-        {data.hits.map((i) => (
-          <li key={i.objectID}>
-            <a href={i.url}>{i.title}</a>
-          </li>
-        ))}
-      </ul>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <ul>
+          {data.hits.map((i) => (
+            <li key={i.objectID}>
+              <a href={i.url}>{i.title}</a>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
