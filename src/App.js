@@ -38,21 +38,23 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
       </header>
-      <div>
+      {/* !form onSubmit to enable "ENTER" key. */}
+      <form
+        onSubmit={e => {
+          setUrl(`https://hn.algolia.com/api/v1/search?query=${query}`)
+
+          //! stop broser reload on submit
+          e.preventDefault()
+        }
+        }
+      >
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        <button
-          type="button"
-          onClick={() =>
-            setUrl(`https://hn.algolia.com/api/v1/search?query=${query}`)
-          }
-        >
-          Search
-        </button>
-      </div>
+        <button type="submit">Search</button>
+      </form>
 
       {isError && <div>Something went wrong ...</div>}
 
